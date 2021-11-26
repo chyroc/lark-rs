@@ -1,20 +1,26 @@
+use std::env;
 use std::io::Error;
+
+use serde::{Deserialize, Serialize};
 
 use lark::Lark;
 
 fn main() {
-    let ins = Lark::new(String::from(""), String::from(""));
+    let app_id = env::var("LARK_APP_ALL_PERMISSION_APP_ID").expect("id not set");
+    let app_secret = env::var("LARK_APP_ALL_PERMISSION_APP_SECRET").expect("id not set");
 
-    let res = ins.get_token().unwrap_err();
-    println!("err: {}", res.message);
-    // match res {
-    //     Result(res) => {
-    //         println!("{:?}", res);
-    //     }
-    //     Err(e) => {
-    //         println!("{}", e.message);
-    //     }
-    // }
-    // block_on(ins.get_token());
-    println!("Hello, world!");
+    println!("app_id is {}", &app_id);
+    println!("app_secret is {}", &app_secret);
+
+    let ins = Lark::new(app_id, app_secret);
+
+    let res = ins.get_token();
+    match res {
+        Ok(res) => {
+            println!("res is {:#?}", res);
+        }
+        Err(err) => {
+            println!("err is {}", err.message)
+        }
+    }
 }

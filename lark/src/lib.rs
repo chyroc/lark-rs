@@ -6,7 +6,6 @@ use lark_error::Error;
 
 pub mod lark_error;
 
-// use lark_error::Error;
 
 pub struct Lark {
     app_id: String,
@@ -35,20 +34,26 @@ impl Lark {
 
     pub fn get_token(&self) -> Result<GetTokenRespData, Error> {
         println!("start get token");
-        let uri = String::from("https://open.feishu.cn/open-apis/auth/v3/tenant_access_token");
+        let uri = String::from("https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal");
         let mut map = HashMap::new();
         map.insert("app_id", &self.app_id);
         map.insert("app_secret", &self.app_secret);
         let client = reqwest::blocking::Client::new();
-        let res = client.post(&uri).json(&map).send().unwrap();
-        let res2: GetTokenResp = res.json().unwrap();
-        if res2.code == 0 {
-            Ok(res2.data)
-        } else {
-            Err(Error {
-                code: res2.code,
-                message: res2.msg,
-            })
+        let res = client.post(&uri).header("content-type", "application/json").send();
+        let text = match res {
+            Ok(r) => match r.text() {
+                Ok(t) => t,
+                Err(e) => return Err(Error::new(-1, e.to_string())),
+            },
+            Err(e) => {
+                return Err(Error::new(-1, e.to_string()));
+            }
+        };
+        println!("text is {}", &text);
+        let res_data: GetTokenResp = serde_json::from_str(text.as_str()).unwrap();
+        if res_data.code != 0 {
+            return Err(Error::new(res_data.code, res_data.msg));
         }
+        return Ok(res_data.data);
     }
 }
