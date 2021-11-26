@@ -19,7 +19,9 @@ impl OKRService {
         let tenant_token = self.client.auth().get_tenant_access_token().unwrap();
 
         let client = reqwest::blocking::Client::new();
-        let res = client.get(&uri).send();
+        let res = client.get(&uri).
+            header("Authorization", format!("token {}", tenant_token.tenant_access_token)).
+            send();
         let text = res.unwrap().text().unwrap();
         println!("text is {}", text);
         // let res_data: GetTokenResp = serde_json::from_str(text.as_str()).unwrap();
