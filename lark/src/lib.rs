@@ -14,8 +14,7 @@ pub mod auth_service;
 pub struct Lark {
     app_id: String,
     app_secret: String,
-
-    pub auth: AuthService,
+    // pub auth: AuthService,
 }
 
 
@@ -31,8 +30,18 @@ impl Lark {
         return Lark {
             app_id,
             app_secret,
-            auth: AuthService::new(self),
         };
+    }
+
+    pub fn clone(self) -> Lark {
+        return Lark {
+            app_id: String::from(&self.app_id),
+            app_secret: String::from(&self.app_secret),
+        };
+    }
+
+    pub fn auth(self) -> AuthService {
+        AuthService::new(self.clone())
     }
 }
 

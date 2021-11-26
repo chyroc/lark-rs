@@ -14,8 +14,9 @@ fn main() {
     println!("app_secret is {}", &app_secret);
 
     let ins = Lark::new(app_id, app_secret);
+    let lark_auth = ins.auth();
 
-    let res = ins.get_tenant_access_token();
+    let res = lark_auth.get_tenant_access_token();
     match res {
         Ok(res) => {
             println!("res is {:#?}", res);
