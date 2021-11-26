@@ -12,6 +12,7 @@ use crate::auth_service::AuthService;
 pub mod err;
 pub mod request;
 pub mod auth_service;
+pub mod message_service;
 
 
 pub struct Lark {
