@@ -3,6 +3,7 @@ use std::io::Error;
 
 use serde::{Deserialize, Serialize};
 
+use lark;
 use lark::Lark;
 
 fn main() {
@@ -14,7 +15,7 @@ fn main() {
 
     let ins = Lark::new(app_id, app_secret);
 
-    let res = ins.get_token();
+    let res = ins.get_tenant_access_token();
     match res {
         Ok(res) => {
             println!("res is {:#?}", res);
