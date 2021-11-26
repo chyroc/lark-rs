@@ -2,8 +2,6 @@ use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};
 
-use err::Error;
-
 use crate::Error;
 use crate::Lark;
 
