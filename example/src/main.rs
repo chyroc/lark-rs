@@ -17,5 +17,9 @@ fn main() {
 
     // println!("tenant token is {:#?}", lark_auth.get_tenant_access_token().unwrap());
     // println!("app token is {:#?}", lark_auth.get_app_access_token().unwrap());
-    println!("okr period is {:#?}", lark_okr.get_okr_period_list(GetOKRPeriodListReq { page_token: None, page_size: Option::from(10) }).unwrap());
+
+    println!("okr period is {:#?}", lark_okr.get_okr_period_list(GetOKRPeriodListReq {
+        page_token: None,
+        page_size: Option::from(10),
+    }).unwrap());
 }

@@ -21,15 +21,7 @@ impl AuthService {
         map.insert("app_secret", &self.client.app_secret);
         let client = reqwest::blocking::Client::new();
         let res = client.post(&uri).json(&map).header("content-type", "application/json").send();
-        let text = match res {
-            Ok(r) => match r.text() {
-                Ok(t) => t,
-                Err(e) => return Err(Error::new(-1, e.to_string())),
-            },
-            Err(e) => {
-                return Err(Error::new(-1, e.to_string()));
-            }
-        };
+        let text = res?.text()?;
         println!("text is {}", &text);
         let res_data: GetTokenResp = serde_json::from_str(text.as_str()).unwrap();
         if res_data.code != 0 {

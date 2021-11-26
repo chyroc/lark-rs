@@ -16,10 +16,10 @@ pub mod message_service;
 pub mod okr_service;
 
 
+#[derive(Clone)]
 pub struct Lark {
     app_id: String,
     app_secret: String,
-    // pub auth: AuthService,
 }
 
 
@@ -38,18 +38,12 @@ impl Lark {
         };
     }
 
-    pub fn clone(self) -> Lark {
-        return Lark {
-            app_id: String::from(&self.app_id),
-            app_secret: String::from(&self.app_secret),
-        };
-    }
 
-    pub fn auth(self) -> AuthService {
+    pub fn auth(&self) -> AuthService {
         AuthService::new(self.clone())
     }
 
-    pub fn okr(self) -> OKRService {
+    pub fn okr(&self) -> OKRService {
         OKRService::new(self.clone())
     }
 }
