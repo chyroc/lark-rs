@@ -40,8 +40,10 @@ impl OKRService {
 #[derive(Debug, Serialize, Deserialize)]
 pub struct GetOKRPeriodListReq {
     // 分页标志page_token, 示例值："xaasdasdax"
+    #[datatype = "query"]
     pub page_token: Option<String>,
     // 分页大小，默认10, 示例值：10, 默认值: `10`
+    #[datatype = "query"]
     pub page_size: Option<i32>,
 }
 
