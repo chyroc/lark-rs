@@ -1,3 +1,6 @@
+#[allow(dead_code)]
+
+#[allow(dead_code)]
 use std::collections::HashMap;
 
 use serde::{Deserialize, Serialize};

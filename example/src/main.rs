@@ -1,9 +1,6 @@
 use std::env;
 use std::io::Error;
 
-use serde::{Deserialize, Serialize};
-
-use lark;
 use lark::Lark;
 
 fn main() {
@@ -16,13 +13,6 @@ fn main() {
     let ins = Lark::new(app_id, app_secret);
     let lark_auth = ins.auth();
 
-    let res = lark_auth.get_tenant_access_token();
-    match res {
-        Ok(res) => {
-            println!("res is {:#?}", res);
-        }
-        Err(err) => {
-            println!("err is {}", err.message)
-        }
-    }
+    // println!("tenant token is {:#?}", lark_auth.get_tenant_access_token().unwrap());
+    println!("app token is {:#?}", lark_auth.get_app_access_token().unwrap());
 }
