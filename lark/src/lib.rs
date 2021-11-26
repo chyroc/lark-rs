@@ -1,5 +1,4 @@
 #[allow(dead_code)]
-
 #[allow(dead_code)]
 use std::collections::HashMap;
 
@@ -8,11 +7,13 @@ use serde::{Deserialize, Serialize};
 use err::Error;
 
 use crate::auth_service::AuthService;
+use crate::okr_service::OKRService;
 
 pub mod err;
 pub mod request;
 pub mod auth_service;
 pub mod message_service;
+pub mod okr_service;
 
 
 pub struct Lark {
@@ -46,6 +47,10 @@ impl Lark {
 
     pub fn auth(self) -> AuthService {
         AuthService::new(self.clone())
+    }
+
+    pub fn okr(self) -> OKRService {
+        OKRService::new(self.clone())
     }
 }
 
